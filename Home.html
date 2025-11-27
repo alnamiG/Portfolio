@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio - Jad Alnami</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* === COLOR VARIABLE DEFINITIONS (MONOCHROMATIC) === */
+        :root {
+            /* Light Mode Defaults (Black Accent) */
+            --color-bg-primary: #f7f7f7;
+            --color-bg-secondary: #ffffff;
+            --color-text-primary: #333333;
+            --color-text-secondary: #6b7280; /* Gray 500/600 */
+            --color-accent: #000000; /* BLACK */
+            --color-accent-hover: #1f2937; /* Dark Gray for hover */
+            --color-border: #e5e7eb; /* Gray 200 */
+            --color-card-bg: #f9fafb; /* Very Light Gray for Testimonial/Card */
+            --color-status-light: #000000; /* Black for light mode status text/dot */
+            
+            /* The black button is now the accent button */
+            --color-black-btn-bg: #000000;
+            --color-black-btn-text: #ffffff;
+
+            /* Testimonial specific colors (LIGHT MODE - requested light grey) */
+            --color-testimonial-bg: #e5e7eb; /* Light Gray (Tailwind gray-200) */
+            --color-quote-text: #1f2937; /* Dark text for contrast */
+            --color-quote-mark: #6b7280; /* Gray 500 for quote marks */
+            --color-attribution-text: #111827; /* Very dark text for name */
+            --color-attribution-info: #4b5563; /* Gray 600 for CEO/Title */
+            --color-separator-line: #d1d5db; /* Gray 300 for line */
+            
+            /* FAQ Specific LIGHT MODE colors */
+            --color-faq-tab-bg: #e5e7eb; 
+            --color-faq-tab-text-inactive: #6b7280;
+            --color-faq-tab-active-bg: #ffffff;
+            --color-faq-tab-active-text: #333333;
+
+            /* --- UPDATED FOR LIGHT GRAY BACKGROUND --- */
+            --color-faq-item-closed-bg: #f3f4f6; /* Light Gray for contrast (Tailwind gray-100) */
+            --color-faq-item-open-bg: #ffffff; /* White background for open content */
+            --color-faq-item-border: #e5e7eb; 
+            --color-faq-item-header-bg: #f3f4f6; /* Header uses the new light gray */
+
+            /* Theme Curtain Colors */
+            --color-curtain-light: #f7f7f7; 
+            --color-curtain-dark: #000000; 
+
+            /* CSS variables to hold calculated position of the theme toggle button */
+            --curtain-start-x: 50%;
+            --curtain-start-y: 0;
+        }
+
+        .dark-mode {
+            /* Dark Mode Overrides (White Accent) */
+            --color-bg-primary: #121111; /* Slightly lighter than pure black for depth */
+            --color-bg-secondary: #171616; /* CHANGED: Matte black finish */
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #cccccc; 
+            --color-accent: #ffffff; 
+            --color-accent-hover: #d1d5db; 
+            --color-border: #171616; 
+            --color-card-bg: #111827; 
+            --color-status-light: #ffffff; 
+
+            /* The black button (Contact Me) is now the white accent button */
+            --color-black-btn-bg: #ffffff;
+            --color-black-btn-text: #171616;
+            
+            /* Testimonial specific colors (DARK MODE - requested dark carbon/black) */
+            --color-testimonial-bg: #1c1b1b; 
+            --color-quote-text: #ffffff;
+            --color-quote-mark: #6b7280; 
+            --color-attribution-text: #ffffff;
+            --color-attribution-info: #9ca3af; 
+            --color-separator-line: #374151; 
+
+            /* --- FAQ Specific DARK MODE colors (MATCHING SCREENSHOT) --- */
+            --color-faq-tab-bg: transparent; 
+            --color-faq-tab-text-inactive: #9ca3af; 
+            --color-faq-tab-active-bg: #2b2e35; /* This is the specific color for the active tab pill */
+            --color-faq-tab-active-text: #ffffff; 
+
+            --color-faq-item-closed-bg: #1c1b1b; /* Very Dark Blue/Black for closed header */
+            --color-faq-item-header-bg: #1c1b1b; /* Header background, matches closed item */
+            --color-faq-item-open-bg: #1c1b1b; /* Lighter Blue/Gray for open content (matches screenshot) */
+            --color-faq-item-border: #1c1b1b; /* Subtle dark gray for internal borders */
+        }
+        
+        /* === GLOBAL STYLES & TRANSITIONS === */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: none; 
+        }
+        
+        /* UPDATED: Removed border-color and box-shadow definitions from here. */
+        .main-content-box {
+            background-color: var(--color-bg-secondary);
+            /* Keep transition for non-color properties like shadow for smoothness */
+            transition: box-shadow 0.5s ease; 
+        }
+
+        /* Set specific transitions for elements that need it (remove color/background transitions to sync with wipe) */
+        a, button, div, input, textarea {
+            transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Ensure navigation pill retains its transitions for the blur effect */
+        /* MODIFIED: Increased duration from 300ms to 500ms for pill and link colors */
+        #nav-pill a {
+            transition: color 0.5s ease, background-color 0.5s ease; 
+        }
+
+        #nav-pill {
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        /* Ensure other theme-aware elements keep their transitions if needed for hover/active states */
+        .btn-black {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* === THEME CURTAIN STYLES === */
+        #theme-curtain {
+            position: fixed;
+            top: var(--curtain-start-y);
+            left: var(--curtain-start-x);
+            
+            /* Sizing and initial state for circular reveal */
+            width: 100vh;
+            height: 100vh;
+            border-radius: 50%;
+            z-index: 100; 
+            transform: translate(-50%, -50%) scale(0); 
+            
+            /* Animation properties */
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            pointer-events: none; 
+            will-change: transform, background-color;
+        }
+
+        /* Apply colors based on the body class */
+        .theme-curtain-light {
+            background-color: var(--color-curtain-light);
+        }
+
+        .theme-curtain-dark {
+            background-color: var(--color-curtain-dark);
+        }
+        
+        /* Animation states */
+        .curtain-in {
+            transform: translate(-50%, -50%) scale(50); 
+            pointer-events: auto; 
+        }
+
+        .curtain-out {
+            transform: translate(-50%, -50%) scale(0); 
+            pointer-events: none;
+        }
+
+        /* === ELEMENT STYLES USING CSS VARIABLES === */
+        
+        /* Text */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+
+        /* Backgrounds */
+        .bg-secondary { background-color: var(--color-bg-secondary); }
+        .bg-card { background-color: var(--color-card-bg); }
+        
+        /* Accent elements (Buttons, Highlights) */
+        .bg-accent { background-color: var(--color-accent); }
+        .hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
+
+        /* Black Button Style (Contact Me) */
+        .btn-black { 
+            background-color: var(--color-black-btn-bg); 
+            color: var(--color-black-btn-text);
+            border-color: var(--color-black-btn-bg);
+        }
+        
+        /* Form Inputs */
+        .input-style {
+            border-color: var(--color-border);
+            color: var(--color-text-primary);
+            background-color: var(--color-bg-secondary);
+        }
+        
+        /* === STATUS LIGHT === */
+        .status-light-text {
+            color: var(--color-status-light);
+        }
+        .blinking-dot {
+            background-color: #22c55e; 
+            animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse-green {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* --- Marquee Animation --- */
+        .marquee-content {
+            animation: scroll-left 40s linear infinite;
+            width: max-content;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Rotation classes */
+        .rotate-right { transform: rotate(4deg); }
+        .rotate-left { transform: rotate(-4deg); }
+        
+        /* === MARQUEE FADE EFFECT STYLES (MODIFIED FOR VISUAL EDGE FADE) === */
+        .marquee-fade {
+            /* Create a mask over the container to fade content near the edges, matching the screenshot's composition */
+            /* Using the background color variable for smooth blending in dark mode */
+            -webkit-mask-image: linear-gradient(to right, 
+                                transparent, 
+                                rgba(0, 0, 0, 1) 15%, 
+                                rgba(0, 0, 0, 1) 85%, 
+                                transparent);
+            mask-image: linear-gradient(to right, 
+                        transparent, 
+                        rgba(0, 0, 0, 1) 15%, 
+                        rgba(0, 0, 0, 1) 85%, 
+                        transparent);
+            overflow: hidden; 
+        }
+
+        .marquee-img-size {
+            width: 234px; 
+            height: 234px;
+            /* Removed old opacity/transition */
+            opacity: 1; 
+            position: relative; 
+            flex-shrink: 0;
+            object-fit: cover;
+            margin: 0 1.5rem; 
+            border-radius: 0.75rem; 
+            /* Added filter for a stylized, slightly dimmed look on the edges */
+            filter: saturate(1.2) brightness(0.8); 
+            transition: filter 0.3s ease;
+        }
+
+        
+        /* === Testimonial Specific Styles === */
+        .testimonial-section-bg {
+            background-color: var(--color-testimonial-bg);
+            color: var(--color-quote-text); 
+        }
+        .testimonial-quote-text {
+            color: var(--color-quote-text);
+        }
+        .quote-mark {
+            color: var(--color-quote-mark);
+        }
+        .attribution-name {
+            color: var(--color-attribution-text);
+        }
+        .attribution-info-text {
+            color: var(--color-attribution-info);
+        }
+        /* MODIFIED: Reduced avatar size from 96px to 64px */
+        .avatar-ma {
+            width: 64px; /* Define the size of your avatar container */
+            height: 64px;
+            border-radius: 50%; /* Makes the container a circle */
+            overflow: hidden; /* Crucial to crop the image into the circle */
+            display: flex; /* To help center the image inside if it's slightly off */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar-ma img {
+            width: 100%; /* Make the image fill the width of its parent */
+            height: 100%; /* Make the image fill the height of its parent */
+            object-fit: cover; /* This is key: it crops the image to fill the container while maintaining aspect ratio */
+            /* border-radius: 50%; <-- Not strictly necessary here if parent has overflow: hidden */
+        }
+        /* End Testimonial Specific Styles */
+
+        /* === FAQ Specific Styles (Updated for 1:1 Black Theme match) === */
+        .faq-box-container {
+            background-color: var(--color-bg-secondary); 
+            @apply p-0;
+        }
+        
+        /* Tab Navigation - Matches screenshot's subtle look */
+        .tab-button {
+            background-color: transparent;
+            color: var(--color-faq-tab-text-inactive); 
+            @apply px-0 py-1 font-medium transition-all duration-500 text-base rounded-none;
+            font-weight: 600;
+        }
+
+        /* Active Tab - Matches screenshot's white underline/border */
+        .tab-button.active-tab {
+            background-color: transparent; 
+            color: var(--color-faq-tab-active-text) !important; 
+            @apply shadow-none;
+            border-bottom: 3px solid var(--color-faq-tab-active-text);
+            padding-bottom: 4px; 
+        }
+        
+        /* The specific header background class for closed/open items, matching the image */
+        .faq-header-bg {
+            background-color: var(--color-faq-item-header-bg);
+        }
+        
+        /* Accordion Item Styling */
+        .accordion-item {
+            background-color: var(--color-faq-item-closed-bg);
+            /* Using rounded-lg to match the screenshot better */
+            @apply mb-3 rounded-lg overflow-hidden shadow-none; 
+        }
+
+        .accordion-header-text {
+            color: var(--color-text-primary);
+        }
+
+        /* Open state for the entire item */
+        .accordion-item.open-item {
+            /* The container background takes the open item color (for when the item expands) */
+            background-color: var(--color-faq-item-open-bg); 
+        }
+
+        .accordion-answer-text {
+            color: var(--color-text-secondary);
+        }
+        
+        /* The header in the open state */
+        .accordion-header[data-is-open="true"] {
+             /* When open, the header still uses the closed BG color */
+            background-color: var(--color-faq-item-closed-bg);
+             @apply rounded-b-none;
+        }
+        
+        /* MODIFIED: Updated for smooth transition */
+        .accordion-body {
+            /* Reset transition to just be on max-height */
+            transition: max-height 0.3s ease-in-out; 
+            overflow: hidden;
+            max-height: 0; /* Default closed state */
+        }
+        
+        .accordion-body.open {
+            /* This section is visible and uses the lighter open background */
+            border-top: 1px solid var(--color-faq-item-border);
+            background-color: var(--color-faq-item-open-bg);
+            @apply rounded-b-lg;
+            /* max-height is now set dynamically via JS for smooth transition */
+        }
+        
+        /* Override for the plus/minus icon color */
+        .dark-mode .icon-indicator {
+             color: #9ca3af; 
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div id="theme-curtain"></div>
+
+    <div class="max-w-4xl mx-auto min-h-screen main-content-box">
+
+        <nav class="fixed top-0 inset-x-0 py-4 z-50">
+            <div id="nav-pill" class="max-w-fit mx-auto backdrop-blur-md rounded-full shadow-xl p-2 flex items-center space-x-4 
+                        bg-white/70 border border-gray-100 shadow-lg transition-colors duration-500
+                        dark:bg-gray-800/90 dark:border-gray-700 dark:shadow-xl">
+                
+                <div class="flex items-center space-x-4 text-base font-medium">
+                    <a href="./Home.html#hero" class="transition duration-500 px-2 py-1 rounded-full text-gray-600 dark:text-gray-400">
+                        Home
+                    </a>
+                    <a href="./Projects.html" class="transition duration-500 px-2 py-1 rounded-full text-gray-600 dark:text-gray-400">
+                        Projects
+                    </a>
+                    <a href="./About Me.html" class="transition duration-500 px-2 py-1 rounded-full text-gray-600 dark:text-gray-400">
+                        About
+                    </a>
+                </div>
+
+                <button id="theme-toggle-nav" class="transition duration-300 p-2 rounded-full cursor-pointer
+                                                text-gray-900 hover:text-gray-700
+                                                dark:text-white dark:hover:text-gray-300">
+                    <svg id="sun-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <main class="pt-28"> 
+            <section id="hero" class="pt-20 pb-12 md:pt-32 md:pb-24 text-center bg-secondary">
+                
+                <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+                    
+                    <div class="flex justify-center mb-4">
+                        <img src="https://i.ibb.co/TMF6HCVs/Profile-Pic.webp" alt="Jad Alnami Profile Picture" 
+                             class="h-28 w-28 object-cover rounded-full shadow-lg ring-4 ring-accent ring-offset-4 ring-offset-white dark:ring-offset-gray-900">
+                    </div>
+
+                    <h1 class="text-3xl sm:text-4xl lg:text-4xl font-extrabold leading-tight text-primary mb-6">
+                        Hey I'm <span class="text-accent">Jad Alnami</span> — Junior Full-stack Engineer.
+                    </h1>
+                    
+                    <p class="text-md sm:text-l text-secondary mb-10">
+                        I develop applications and websites (PHP, JavaScript, React, etc.), and also manage IT services as 2nd Level Support.
+                    </p>
+                </div>
+
+                <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+                    <div class="flex justify-center items-center space-x-6">
+                        
+                        <a href="mailto:g.alnami@yahoo.com" 
+                           class="inline-flex items-center justify-center px-4 py-2 border border-black text-sm font-medium rounded-lg shadow-sm btn-black transition duration-100">
+                            Contact Me
+                        </a>
+
+                        <div class="flex items-center space-x-2 text-sm font-medium">
+                            <span class="w-2.5 h-2.5 rounded-full blinking-dot"></span>
+                            <span class="text-green-500">Open to new opportunities</span>
+                        </div>
+
+                        <a href="https://www.linkedin.com/in/gehad-al-nami/" target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.447 20.452h-3.554v-5.48h-0.024c-0.022-0.046-0.038-0.09-0.063-0.136c-0.245-0.452-0.669-0.925-1.442-0.925c-1.096 0-1.854 0.82-1.854 2.029v4.512h-3.552v-11.884h3.552v1.734c0.501-0.785 1.34-1.558 3.197-1.558c2.316 0 4.02 1.517 4.02 4.717v7.0h3.554l0.001 0.002zM5.132 3.65c-0.852 0-1.54 0.688-1.54 1.54c0 0.85 0.688 1.54 1.54 1.54c0.853 0 1.54-0.69 1.54-1.54c0-0.852-0.687-1.54-1.54-1.54zM3.38 20.452h3.552v-11.884h-3.552v11.884z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="overflow-hidden py-16 mb-8 marquee-fade">
+                    <div id="marquee-content" class="marquee-content flex items-center">
+                        <img src="https://i.ibb.co/tPsvPM3s/100-0136.webp" alt="Developer Studio Portrait" class="marquee-img-size rotate-left">
+                        <img src="https://i.ibb.co/4ZxmmPw6/unnamed.webp" alt="Coding Desk" class="marquee-img-size rotate-right">
+                        <img src="https://i.ibb.co/F4hrfb0F/IMG-0147.webp" alt="Laptop Screen" class="marquee-img-size rotate-left">
+                        <img src="https://i.ibb.co/NwmQkq8/IMG-0801.webp" alt="Team Collaboration" class="marquee-img-size rotate-right">
+                        <img src="https://i.ibb.co/C53KCWj1/IMG-4983-Facetune-20-09-2025-05-54-00.jpg" alt="Abstract Design" class="marquee-img-size rotate-left">
+
+                        <img src="https://i.ibb.co/tPsvPM3s/100-0136.webp" alt="Developer Studio Portrait" class="marquee-img-size rotate-left">
+                        <img src="https://i.ibb.co/4ZxmmPw6/unnamed.webp" alt="Coding Desk" class="marquee-img-size rotate-right">
+                        <img src="https://i.ibb.co/F4hrfb0F/IMG-0147.webp" alt="Laptop Screen" class="marquee-img-size rotate-left">
+                        <img src="https://i.ibb.co/NwmQkq8/IMG-0801.webp" alt="Team Collaboration" class="marquee-img-size rotate-right">
+                        <img src="https://i.ibb.co/C53KCWj1/IMG-4983-Facetune-20-09-2025-05-54-00.jpg" alt="Abstract Design" class="marquee-img-size rotate-left">
+                        </div>
+                </div>
+                
+            </section>
+
+            <section id="about" class="py-16">
+                <div class="max-w-4xl mx-auto px-8 sm:px-12 lg:px-16">
+                    <div class="grid lg:grid-cols-2 gap-20">
+                        
+                        <div>
+                            <h3 class="text-3xl font-bold text-primary mb-2">About Me</h3>
+                            <p class="text-sm font-medium text-secondary">
+                                Computer Science graduate and Junior Full-Stack Engineer with the experience of transforming complex ideas into user-friendly website and and applications. Known for 
+                                blending backend depth with frontend technologies making clean and sharp websites and applications (just like this one). Currently, I focus on performance optimization and web development, 
+                                I thrive in collaborative environments and am always eager to learn the next best tool to solve a problem efficiently.
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 class="text-3xl font-bold text-primary mb-2">Work Experience</h3>
+                            
+                            <div class="space-y-4">
+                                <div class="space-y-1">
+                                    <p class="text-sm font-medium text-secondary">12/2024 - 06/2025</p>
+                                    
+                                    <a href="https://simonix.my" target="_blank" class="text-sm font-medium text-secondary">
+                                        Fullstack Engineer and IT Support Intern at Simonix Digital Labs
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </section>
+            
+            <section id="testimonials" class="py-10 testimonial-section-bg">
+                <div class="w-full max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-10">
+                        <p class="text-xl md:text-medium font-medium italic leading-relaxed px-4 sm:px-10 testimonial-quote-text">
+                            <span class="text-3xl relative top-1 right-2 quote-mark">&ldquo;</span>
+                            He is a very fast and clever learner. Beyond his determination, hard work, and
+                            technical skills, his attitude and approach towards any complex issue is very impressive
+                            and productive.
+                            <span class="text-2xl relative bottom-1 left-2 quote-mark">&rdquo;</span>
+                        </p>
+                    </div>
+
+                    <div class="flex flex-col items-center mt-12">
+                        <div class="avatar-ma mb-4">
+                            <img src="https://i.ibb.co/23ZqJrth/1517340167339.webp" alt="Profile Picture">
+                        </div>
+
+                        <div class="text-center">
+                            <h3 class="text-lg font-semibold attribution-name">Mohammed Aldailami</h3>
+                            <p class="text-sm attribution-info-text">CEO and Co-Founder at Simonix Digital Labs</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="faq" class="py-20">
+                <div class="w-full"> 
+                    <div id="faq-card" class="faq-box-container">
+                        
+                        <div class="px-8 sm:px-12 lg:px-16">
+                            <h2 class="text-3xl font-bold text-primary mb-1">Frequently Asked Questions</h2>
+                            <p class="text-lg mb-8 text-secondary">A little more about how I work and what I value.</p>
+                            
+                            <div class="flex justify-center sm:justify-start">
+                                <div id="tabs" class="flex space-x-6 mb-8"> 
+                                    <button data-category="leadership" class="tab-button">Leadership & Philosophy</button>
+                                    <button data-category="team" class="tab-button">Team & Culture</button>
+                                    <button data-category="about" class="tab-button">About Me</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="accordion-content" class="space-y-3 px-8 sm:px-12 lg:px-16">
+                            </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="mt-12 py-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex justify-center space-x-6 mb-4">
+                     <a href="https://www.linkedin.com/in/gehad-al-nami/" target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.447 20.452h-3.554v-5.48h-0.024c-0.022-0.046-0.038-0.09-0.063-0.136c-0.245-0.452-0.669-0.925-1.442-0.925c-1.096 0-1.854 0.82-1.854 2.029v4.512h-3.552v-11.884h3.552v1.734c0.501-0.785 1.34-1.558 3.197-1.558c2.316 0 4.02 1.517 4.02 4.717v7.0h3.554l0.001 0.002zM5.132 3.65c-0.852 0-1.54 0.688-1.54 1.54c0 0.85 0.688 1.54 1.54 1.54c0.853 0 1.54-0.69 1.54-1.54c0-0.852-0.687-1.54-1.54-1.54zM3.38 20.452h3.552v-11.884h-3.552v11.884z"/>
+                            </svg>
+                        </a>
+                    <a href="https://github.com/alnamiG?tab=repositories" target="_blank"
+                        rel="noopener noreferrer"
+                         class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577 0-.285-.01-1.045-.015-2.05-3.338.725-4.04-1.608-4.04-1.608-.546-1.385-1.332-1.755-1.332-1.755-1.087-.745.082-.73.082-.73 1.205.085 1.838 1.238 1.838 1.238 1.07 1.83 2.81 1.3 3.493.995.108-.775.419-1.3.765-1.59-2.67-.3-5.46-1.335-5.46-5.94 0-1.312.47-2.385 1.235-3.22-.123-.3-.535-1.52.115-3.175 0 0 1-.32 3.3.125 1.13-.313 2.34-.47 3.55-.47.005.003.01.006.015.01 1.21.0 2.42.157 3.55.47 2.3-.445 3.3-.125 3.3-.125.65 1.655.24 2.875.115 3.175.765.835 1.235 1.907 1.235 3.22 0 4.615-2.79 5.645-5.475 5.93.43.37.81 1.095.81 2.21 0 1.595-.015 2.885-.015 3.285 0 .315.22.69.825.575C20.565 21.8 24 17.303 24 12c0-6.628-5.372-12-12-12z" clip-rule="evenodd"/>
+                        </svg>
+                        </a>
+                    <a href="mailto:g.alnami@yahoo.com"
+                            rel="noopener noreferrer"
+                                class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+                        </svg>
+                        </a>
+                </div>
+                <p class="text-sm text-secondary">
+                    Copyright &copy; 2025 
+                </p>
+            </div>
+        </footer>
+
+    </div> 
+    
+    <script>
+        // --- FAQ Data Structure (from user's request) ---
+        const faqData = {
+            'leadership': [
+                { q: "What is your leadership philosophy?", a: "I believe in servant leadership. My primary goal is to empower myself by fostering a culture of ownership, transparency, and continuous learning. I focus on removing obstacles and providing the support and resources my team needs to do their best work, ensuring they are aligned with our strategic goals." },
+                { q: "How do you approach technical debt?", a: "I view technical debt as a strategic tool—sometimes necessary to achieve business objectives, but it must be managed proactively. I advocate for a balanced approach, dedicating regular time to refactoring and improving our codebase to ensure long-term velocity and system health." },
+                { q: "What role does mentorship play on your teams?", a: "Mentorship is fundamental to a team's growth. I encourage a culture where knowledge-sharing is constant, with senior engineers guiding junior members through code reviews, pair programming, and dedicated mentoring. Investing in every team member's development elevates the entire team." }
+            ],
+            'team': [
+                { q: "How do you foster a postive and inclusive environment?", a: "By building a foundation of psychological safety, where everyone feels comfortable sharing ideas and feedback without judgment. I actively promote diverse perspectives, ensure our processes are fair and transparent, and make a point to celebrate both individual and team successes." },
+                { q: "What do you look for when working in a team?", a: "I look for clarity in roles, goals, and communication, coupled with a foundation of psychological safety where honest debate and mistake-admitting are encouraged. Crucially, I value reliability and a shared commitment where everyone prioritizes the team's success over individual preferences." },
+            ],
+            'about': [
+                { q: "What do you enjoy most about your work?", a: "What I enjoy most about my work is solving complex problems and turning ideas into practical solutions. I thrive on collaborating with others to build systems that make a real impact, and I love seeing the people around me grow and overcome their own limits. I also have a passion for learning and enjoy exploring new technologies that push me to keep growing." },
+                { q: "What are your hobbies outside of work?", a: "Outside of work, I enjoy golfing, travelling, and attempting (and often failing) to bake the perfect Cinnamon Rolls. I also manage a small part of the family's real estate business, and it has taught me a lot about balancing responsibility, relationships, and long-term investment. I like experimenting with men's fashion and personal style, and I make time to connect with friends and family through travel, game nights, or simply catching up." },
+            ]
+        };
+        
+        // Global variable for tracking the current category/tab
+        let currentFaqCategory = 'leadership';
+
+        /**
+         * Renders the accordion items for the currently selected category.
+         * @param {boolean} [keepOpenState=true] - If true, tries to keep the open/closed state of the accordion items.
+         */
+        function renderAccordion(keepOpenState = true) {
+            const accordionContent = document.getElementById('accordion-content');
+            const data = faqData[currentFaqCategory] || [];
+            accordionContent.innerHTML = ''; // Clear previous content
+
+            data.forEach((item, index) => {
+                
+                // Determine initial open state: 
+                // We always start closed unless explicitly keeping state during theme change.
+                let isOpen = keepOpenState ? (document.querySelector(`.accordion-header[data-index="${index}"]`)?.dataset.isOpen === 'true') : false;
+
+                // Use the custom, theme-aware CSS classes for coloring
+                const headerTextClass = 'accordion-header-text';
+                const answerTextClass = 'accordion-answer-text';
+
+                // Apply initial 'open-item' class if needed (for proper background transition)
+                const itemOpenClass = isOpen ? 'open-item' : '';
+
+                
+                // Create the main item container (Question and Answer)
+                const itemHtml = `
+                    <div class="accordion-item ${itemOpenClass} p-0 rounded-lg overflow-hidden shadow-none transition-all duration-100" data-index="${index}">
+                        <div class="accordion-header faq-header-bg flex justify-between items-start cursor-pointer group p-5" role="button" data-index="${index}" data-is-open="${isOpen}">
+                            <span class="text-xl font-semibold mr-4 ${headerTextClass}">${item.q}</span>
+                            <div class="icon-indicator text-2xl font-light leading-none w-6 h-6 flex items-center justify-center transition-transform duration-100 ${headerTextClass}">
+                                ${isOpen ? '&times;' : '+'}
+                            </div>
+                        </div>
+
+                        <div class="accordion-body transition-all duration-100 ease-in-out ${isOpen ? 'open' : ''} ${answerTextClass}">
+                            <div class="p-5 pt-4 accordion-content-inner">${item.a}</div>
+                        </div>
+                    </div>
+                `;
+                accordionContent.insertAdjacentHTML('beforeend', itemHtml);
+            });
+
+            // Re-attach event listeners to the new headers
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', toggleAccordion);
+            });
+            
+            // If we are keeping state, manually restore the smooth open state immediately
+            if (keepOpenState) {
+                document.querySelectorAll('.accordion-body.open').forEach(body => {
+                    // Temporarily set transition to none for instant repaint
+                    body.style.transition = 'none';
+                    // Measure content height and set max-height
+                    const inner = body.querySelector('.accordion-content-inner');
+                    if (inner) {
+                        body.style.maxHeight = inner.offsetHeight + 40 + 'px'; // + Padding
+                    }
+                    // Restore transition after a tiny delay
+                    setTimeout(() => {
+                        body.style.transition = 'max-height 0.3s ease-in-out';
+                    }, 50);
+                });
+            }
+        }
+
+        /**
+         * Toggles the answer visibility for a specific accordion item.
+         * @param {Event} event - The click event.
+         */
+        function toggleAccordion(event) {
+            const header = event.currentTarget;
+            const parentItem = header.closest('.accordion-item');
+            const body = parentItem.querySelector('.accordion-body');
+            const innerContent = body.querySelector('.accordion-content-inner');
+            const indicator = parentItem.querySelector('.icon-indicator');
+            let isOpen = header.dataset.isOpen === 'true';
+
+            // Toggle logic
+            if (isOpen) {
+                // Collapse (Set max-height to 0)
+                body.style.maxHeight = '0';
+                body.classList.remove('open');
+                indicator.innerHTML = '+';
+                header.dataset.isOpen = 'false';
+                parentItem.classList.remove('open-item');
+            } else {
+                // Expand (Calculate content height and set max-height)
+                
+                // Close all other open items first 
+                document.querySelectorAll('.accordion-header[data-is-open="true"]').forEach(openHeader => {
+                    if (openHeader !== header) {
+                        const openParent = openHeader.closest('.accordion-item');
+                        const openBody = openParent.querySelector('.accordion-body');
+                        const openIndicator = openParent.querySelector('.icon-indicator');
+                        
+                        openBody.style.maxHeight = '0';
+                        openBody.classList.remove('open');
+                        openIndicator.innerHTML = '+';
+                        openHeader.dataset.isOpen = 'false';
+                        openParent.classList.remove('open-item');
+                    }
+                });
+
+                // Expand the clicked item
+                const contentHeight = innerContent.offsetHeight + 40; // Add padding (20px top + 20px bottom)
+                body.style.maxHeight = contentHeight + 'px';
+                body.classList.add('open');
+                indicator.innerHTML = '&times;';
+                header.dataset.isOpen = 'true';
+                parentItem.classList.add('open-item');
+            }
+        }
+
+        /**
+         * Handles tab switching logic and recolors tabs during theme switch.
+         * @param {Event | null} event - The click event (or null if called for theme update).
+         * @param {boolean} isThemeUpdate - True if called only to update theme/styles (no content switch).
+         */
+        function handleTabSwitch(event, isThemeUpdate = false) {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            let newCategory = currentFaqCategory;
+            
+            // Determine the category to activate. If an event fired it, use its data-category.
+            if (event) {
+                newCategory = event.currentTarget.dataset.category;
+            }
+
+            // Check for early exit: Only exit if it's NOT a theme update AND the category hasn't changed, AND an event was actually fired.
+            if (!isThemeUpdate && newCategory === currentFaqCategory && event) return; 
+
+            // 1. Update active tab styling
+            tabButtons.forEach(btn => {
+                const isActive = btn.dataset.category === newCategory;
+                
+                if (isActive) {
+                    // Apply Active styles: uses custom CSS class for theme mapping
+                    btn.classList.add('active-tab');
+                } else {
+                    // Apply Inactive styles: removed active class
+                    btn.classList.remove('active-tab');
+                }
+            });
+
+            // 2. Update content
+            currentFaqCategory = newCategory;
+            if (!isThemeUpdate) {
+                // Renders content, starting all questions closed (as per the fix)
+                renderAccordion(false); 
+            } else {
+                 // If it's a theme update, re-render to apply new theme-based colors to accordion items
+                 renderAccordion(true); 
+            }
+        }
+        
+        // --- Page Navigation Transition Logic ---
+        
+        /**
+         * Initiates the curtain exit animation and then navigates to the new page.
+         * @param {string} targetUrl The URL to navigate to after the animation.
+         */
+        function handleNavigation(event) {
+            event.preventDefault();
+            const targetUrl = event.currentTarget.href;
+            const toggleButton = document.getElementById('theme-toggle-nav');
+            const rect = toggleButton.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const body = document.body;
+            const curtain = document.getElementById('theme-curtain');
+            
+            // 1. Set curtain start point (from the nav pill)
+            document.documentElement.style.setProperty('--curtain-start-x', `${centerX}px`);
+            document.documentElement.style.setProperty('--curtain-start-y', `${centerY}px`);
+
+            // 2. Set curtain color based on the current theme
+            const isCurrentlyDark = body.classList.contains('dark-mode');
+            if (isCurrentlyDark) {
+                curtain.classList.add('theme-curtain-dark');
+                curtain.classList.remove('theme-curtain-light');
+            } else {
+                curtain.classList.add('theme-curtain-light');
+                curtain.classList.remove('theme-curtain-dark');
+            }
+            
+            // 3. Start the curtain-in animation
+            curtain.classList.remove('curtain-out');
+            curtain.classList.add('curtain-in');
+
+            // Set a flag in session storage so the destination page knows to run the entry animation
+            sessionStorage.setItem('isTransitioning', 'true');
+
+            // 4. Wait for the animation (0.5s) and then navigate
+            setTimeout(() => {
+                window.location.href = targetUrl;
+            }, 500); 
+        }
+
+        /**
+         * Handles the page entry animation (curtain opening).
+         */
+        function initializePageEntryTransition() {
+             const curtain = document.getElementById('theme-curtain');
+             const isTransitioning = sessionStorage.getItem('isTransitioning');
+             const body = document.body;
+             
+             sessionStorage.removeItem('isTransitioning'); // Remove the flag immediately
+
+             if (isTransitioning === 'true') {
+                // Determine curtain color from current theme
+                const isCurrentlyDark = body.classList.contains('dark-mode');
+                if (isCurrentlyDark) {
+                    curtain.classList.add('theme-curtain-dark');
+                    curtain.classList.remove('theme-curtain-light');
+                } else {
+                    curtain.classList.add('theme-curtain-light');
+                    curtain.classList.remove('theme-curtain-dark');
+                }
+                
+                // Start the animation: Curtain is full-screen, scale it out
+                curtain.classList.remove('curtain-out');
+                curtain.classList.add('curtain-in'); // Start at full size
+                
+                // Execute the scale-out transition after a tiny delay
+                setTimeout(() => {
+                    curtain.classList.remove('curtain-in');
+                    curtain.classList.add('curtain-out');
+                }, 100); // 100ms delay to ensure the `curtain-in` class is applied before `curtain-out` starts the transition
+            } else {
+                // Normal load: ensure curtain is closed and off-screen
+                curtain.classList.remove('curtain-in');
+                curtain.classList.add('curtain-out');
+            }
+        }
+        
+        // --- Theme Toggle Logic ---
+        function updateIcons(isDark) {
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            if (isDark) {
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        }
+
+        function setTheme(isDark) {
+            const body = document.body;
+            if (isDark) {
+                body.classList.add('dark-mode');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.classList.remove('dark-mode');
+                localStorage.setItem('theme', 'light');
+            }
+            updateIcons(isDark);
+        }
+
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            
+            let initialDark = false;
+            if (savedTheme === 'dark') {
+                initialDark = true;
+            } else if (savedTheme === 'light') {
+                initialDark = false;
+            } else if (prefersDark) {
+                initialDark = true;
+            }
+            
+            // Set initial theme instantly
+            setTheme(initialDark);
+            // Curtain initialization is now handled by initializePageEntryTransition
+        }
+
+        function toggleThemeWithTransition() {
+            const toggleButton = document.getElementById('theme-toggle-nav');
+            const curtain = document.getElementById('theme-curtain');
+            const body = document.body;
+            const rect = toggleButton.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+
+            document.documentElement.style.setProperty('--curtain-start-x', `${centerX}px`);
+            document.documentElement.style.setProperty('--curtain-start-y', `${centerY}px`);
+
+            const isCurrentlyDark = body.classList.contains('dark-mode');
+            const targetIsDark = !isCurrentlyDark;
+            
+            // 1. Prepare and show curtain (Color is based on the theme we are LEAVING)
+            curtain.classList.remove('curtain-out');
+            curtain.classList.add('curtain-in');
+
+            if (isCurrentlyDark) {
+                curtain.classList.add('theme-curtain-dark');
+                curtain.classList.remove('theme-curtain-light');
+            } else {
+                curtain.classList.add('theme-curtain-light');
+                curtain.classList.remove('theme-curtain-dark');
+            }
+            
+            // 2. Wait for the curtain to cover the screen (CSS transition is 0.5s)
+            setTimeout(() => {
+                // 3. Immediately switch theme behind the curtain
+                setTheme(targetIsDark); 
+                
+                // REFRESH FAQ STYLES: Call FAQ handler to update colors based on the new theme
+                handleTabSwitch(null, true); 
+
+                // 4. Change curtain color to the NEW theme before it exits
+                if (targetIsDark) {
+                    curtain.classList.add('theme-curtain-dark');
+                    curtain.classList.remove('theme-curtain-light');
+                } else {
+                    curtain.classList.add('theme-curtain-light');
+                    curtain.classList.remove('theme-curtain-dark');
+                }
+
+                // 5. Hide curtain (scale out)
+                curtain.classList.remove('curtain-in');
+                curtain.classList.add('curtain-out');
+                
+            }, 500); // SYNCHRONIZED
+        }
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Initialize Theme and Page Entry Transition
+            initializeTheme();
+            initializePageEntryTransition();
+
+            // 2. Setup Event Listeners
+            const toggleButton = document.getElementById('theme-toggle-nav');
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleThemeWithTransition);
+            }
+            
+            // Attach handleNavigation to all internal links in the nav and main body
+            document.querySelectorAll('a[href^="./"]:not([target="_blank"]), a[href$=".html"]:not([target="_blank"])').forEach(link => {
+                // Exclude mailto and external links (target="_blank" handles most external)
+                if (link.href && !link.href.startsWith('mailto:')) {
+                    link.addEventListener('click', handleNavigation);
+                }
+            });
+
+            // 3. Highlight active navigation link
+            const navLinks = document.querySelectorAll('nav a[href^="#"], nav a[href$=".html"]');
+            const sections = document.querySelectorAll('main section'); 
+            
+            const activeClasses = ['font-bold', 'text-gray-900', 'dark:text-white'];
+            const inactiveClasses = ['text-gray-600', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+
+            function updateActiveNav() {
+                let current = 'hero'; // Default to hero
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150; 
+                    if (window.scrollY >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+                
+                const currentPage = window.location.pathname.split('/').pop() || 'Home.html';
+                
+                navLinks.forEach(a => {
+                    const href = a.getAttribute('href');
+                    const targetId = href.includes('#') ? href.split('#')[1] : null;
+                    const targetPage = href.includes('/') ? href.split('/').pop() : href;
+
+                    let isActive = false;
+
+                    // 1. Handle Home/Anchor link
+                    if (targetId === current && targetPage.startsWith('Home.html')) {
+                        isActive = true;
+                    } 
+                    // 2. Handle External Page links (Projects.html, About Me.html)
+                    else if (targetPage === currentPage && !href.includes('#')) {
+                        isActive = true;
+                    }
+
+
+                    if (isActive) {
+                        a.classList.add(...activeClasses);
+                        a.classList.remove(...inactiveClasses);
+                    } else {
+                        a.classList.add(...inactiveClasses);
+                        a.classList.remove(...activeClasses);
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav(); 
+            
+            
+            // 4. FAQ LOGIC
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', handleTabSwitch);
+            });
+            
+            const initialTab = document.querySelector('.tab-button[data-category="leadership"]');
+            if (initialTab) {
+                initialTab.classList.add('active-tab'); 
+                handleTabSwitch(null, false);
+            }
+        });
+    </script>
+</body>
+</html>

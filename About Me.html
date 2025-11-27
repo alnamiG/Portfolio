@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Me - Jad Alnami</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* === COLOR VARIABLE DEFINITIONS (MONOCHROMATIC) === */
+        :root {
+            /* Light Mode Defaults (Black Accent) */
+            --color-bg-primary: #f7f7f7;
+            --color-bg-secondary: #ffffff;
+            --color-text-primary: #333333;
+            --color-text-secondary: #6b7280; /* Gray 500/600 */
+            --color-accent: #000000; /* BLACK */
+            --color-accent-hover: #1f2937; /* Dark Gray for hover */
+            --color-border: #e5e7eb; /* Gray 200 */
+            --color-card-bg: #f9fafb; /* Very Light Gray for Testimonial/Card */
+            --color-status-light: #000000; /* Black for light mode status text/dot */
+            
+            /* The black button is now the accent button */
+            --color-black-btn-bg: #000000;
+            --color-black-btn-text: #ffffff;
+            
+            /* --- NEW BLUE LINK COLOR --- */
+            --color-link-blue: #007AFF; 
+            
+            /* Polaroid Specific Colors */
+            --color-polaroid-bg: #ffffff;
+            --color-polaroid-shadow: rgba(0, 0, 0, 0.2);
+            --color-polaroid-border: #e0e0e0;
+            --color-polaroid-text: #333333;
+
+            /* Testimonial specific colors (LIGHT MODE - requested light grey) */
+            --color-testimonial-bg: #e5e7eb; /* Light Gray (Tailwind gray-200) */
+            --color-quote-text: #1f2937; /* Dark text for contrast */
+            --color-quote-mark: #6b7280; /* Gray 500 for quote marks */
+            --color-attribution-text: #111827; /* Very dark text for name */
+            --color-attribution-info: #4b5563; /* Gray 600 for CEO/Title */
+            --color-separator-line: #d1d5db; /* Gray 300 for line */
+            
+            /* FAQ Specific LIGHT MODE colors */
+            --color-faq-tab-bg: #e5e7eb; 
+            --color-faq-tab-text-inactive: #6b7280;
+            --color-faq-tab-active-bg: #ffffff;
+            --color-faq-tab-active-text: #333333;
+
+            /* --- UPDATED FOR LIGHT GRAY BACKGROUND --- */
+            --color-faq-item-closed-bg: #f3f4f6; 
+            --color-faq-item-open-bg: #ffffff; 
+            --color-faq-item-border: #e5e7eb; 
+            --color-faq-item-header-bg: #f3f4f6; 
+
+            /* Theme Curtain Colors */
+            --color-curtain-light: #f7f7f7; 
+            --color-curtain-dark: #000000; 
+
+            /* CSS variables to hold calculated position of the theme toggle button */
+            --curtain-start-x: 50%;
+            --curtain-start-y: 0;
+        }
+
+        .dark-mode {
+            /* Dark Mode Overrides (White Accent) */
+            --color-bg-primary: #121111; 
+            --color-bg-secondary: #171616; 
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #cccccc; 
+            --color-accent: #ffffff; 
+            --color-accent-hover: #d1d5db; 
+            --color-border: #171616; 
+            --color-card-bg: #111827; 
+            --color-status-light: #ffffff; 
+            
+            /* Polaroid Specific Colors (Dark mode) */
+            --color-polaroid-bg: #ffffff; /* Must remain white for authentic look */
+            --color-polaroid-shadow: rgba(255, 255, 255, 0.1);
+            --color-polaroid-border: #333333; /* Darker border in dark mode */
+            --color-polaroid-text: #333333; /* Text must remain dark for white background */
+
+
+            /* The black button (Contact Me) is now the white accent button */
+            --color-black-btn-bg: #ffffff;
+            --color-black-btn-text: #171616;
+            
+            /* Testimonial specific colors (DARK MODE - requested dark carbon/black) */
+            --color-testimonial-bg: #1c1b1b; 
+            --color-quote-text: #ffffff;
+            --color-quote-mark: #6b7280; 
+            --color-attribution-text: #ffffff;
+            --color-attribution-info: #9ca3af; 
+            --color-separator-line: #374151; 
+
+            /* FAQ Specific DARK MODE colors - Not used on this page, but kept for consistency */
+            --color-faq-tab-bg: transparent; 
+            --color-faq-tab-text-inactive: #9ca3af; 
+            --color-faq-tab-active-bg: #2b2e35; 
+            --color-faq-tab-active-text: #ffffff; 
+
+            --color-faq-item-closed-bg: #1c1b1b; 
+            --color-faq-item-header-bg: #1c1b1b; 
+            --color-faq-item-open-bg: #1c1b1b; 
+            --color-faq-item-border: #1c1b1b; 
+        }
+        
+        /* === GLOBAL STYLES & TRANSITIONS === */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: none; 
+        }
+        
+        .main-content-box {
+            background-color: var(--color-bg-secondary);
+            transition: box-shadow 0.5s ease; 
+        }
+
+        a, button, div, input, textarea {
+            transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+        }
+
+        #nav-pill a {
+            transition: color 0.5s ease, background-color 0.5s ease; 
+        }
+
+        #nav-pill {
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .btn-black {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* === THEME CURTAIN STYLES === */
+        #theme-curtain {
+            position: fixed;
+            top: var(--curtain-start-y);
+            left: var(--curtain-start-x);
+            
+            width: 100vh;
+            height: 100vh;
+            border-radius: 50%;
+            z-index: 100; 
+            transform: translate(-50%, -50%) scale(0); 
+            
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            pointer-events: none; 
+            will-change: transform, background-color;
+        }
+
+        .theme-curtain-light {
+            background-color: var(--color-curtain-light);
+        }
+
+        .theme-curtain-dark {
+            background-color: var(--color-curtain-dark);
+        }
+        
+        .curtain-in {
+            transform: translate(-50%, -50%) scale(50); 
+            pointer-events: auto; 
+        }
+
+        .curtain-out {
+            transform: translate(-50%, -50%) scale(0); 
+            pointer-events: none;
+        }
+
+        /* === ELEMENT STYLES USING CSS VARIABLES === */
+        
+        /* Text */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+        
+        /* --- NEW: Specific Blue Link Color --- */
+        .text-link-blue { 
+            color: var(--color-link-blue); 
+        }
+
+        /* Backgrounds */
+        .bg-secondary { background-color: var(--color-bg-secondary); }
+        
+        /* Accent elements (Buttons, Highlights) */
+        .bg-accent { background-color: var(--color-accent); }
+        .hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
+
+        /* Black Button Style (Contact Me) */
+        .btn-black { 
+            background-color: var(--color-black-btn-bg); 
+            color: var(--color-black-btn-text);
+            border-color: var(--color-black-btn-bg);
+        }
+        
+        /* Specific Styles for the About Page Layout (Matching Screenshots) */
+        .about-image-card {
+            /* Ensures the image is rounded and has a shadow */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Tailwind shadow-lg */
+            border-radius: 0.75rem; /* Tailwind rounded-xl */
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* --- TILT --- */
+            transform: rotate(4deg);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .about-image-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .image-gallery-container {
+            /* Styling for the small images at the bottom of the page */
+            max-width: 380px; /* Increased size to better fit polaroids */
+            margin: 4rem auto 2rem;
+            /* Ensure the container is positioned relative for hover effects */
+            position: relative; 
+        }
+        
+        /* --- NEW: Polaroid Style Definition --- */
+        .polaroid-style {
+            background-color: var(--color-polaroid-bg); /* White background */
+            padding: 10px 10px 30px 10px; /* Padding for border and large bottom area */
+            border: 1px solid var(--color-polaroid-border);
+            box-shadow: 0 10px 20px -5px var(--color-polaroid-shadow);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Needed for absolute positioning in gallery item */
+            overflow: hidden;
+        }
+        
+        /* Styling for the image content inside the polaroid frame */
+        .polaroid-image-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .polaroid-image-wrapper img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Styling for the text caption */
+        .polaroid-caption {
+            color: var(--color-polaroid-text);
+            font-size: 0.95rem; /* Slightly larger text */
+            font-weight: 500;
+            padding-top: 10px; /* Space between image and text */
+            text-align: center;
+            /* The width of the text area is determined by the outer padding of the polaroid-style div */
+        }
+
+
+        .image-gallery-item {
+            /* Now defines overall size, tilt, and hover properties */
+            width: 180px; /* Increased size for better effect */
+            height: 220px; /* Height includes caption area */
+            
+            /* Removed old border/shadow */
+            border-radius: 0; 
+            
+            /* --- Hover transition properties --- */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0s step-start; 
+        }
+        
+        .gallery-image-1 { 
+            transform: rotate(-8deg) translateX(-15px); 
+            z-index: 10; /* Lower z-index for the back image */
+        }
+        .gallery-image-2 { 
+            transform: rotate(5deg) translateX(15px) translateY(-5px); 
+            z-index: 20; /* Higher z-index for the front image */
+        }
+
+        /* --- Hover separation effect on the container (for when MOUSE IS NOT ON AN IMAGE) --- */
+        .image-gallery-container:hover .gallery-image-1 {
+            /* Move further left/up and scale up */
+            transform: rotate(-10deg) translateX(-60px) translateY(-15px) scale(1.05); 
+            box-shadow: 0 15px 25px -5px var(--color-polaroid-shadow);
+        }
+
+        .image-gallery-container:hover .gallery-image-2 {
+            /* Move further right/down and scale up */
+            transform: rotate(7deg) translateX(60px) translateY(15px) scale(1.05); 
+            box-shadow: 0 15px 25px -5px var(--color-polaroid-shadow);
+        }
+
+        /* --- Bring hovered image to front (overrides container hover z-index) --- */
+        .image-gallery-item:hover {
+            z-index: 50; /* Bring the individual hovered image to the front */
+            box-shadow: 0 20px 30px -5px rgba(0, 0, 0, 0.3), 0 15px 15px -5px rgba(0, 0, 0, 0.15); /* Slightly stronger shadow */
+            /* Add scale for a slight lift when hovering the specific item */
+            transform: scale(1.08) !important; 
+        }
+        
+        /* Re-apply non-hover transforms if not hovering the container to ensure clean state */
+        .image-gallery-item:not(:hover) {
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, z-index 0s step-end 0.3s;
+        }
+
+
+        /* Dark Mode Specific Adjustments for Gallery Border/Shadow */
+        .dark-mode .polaroid-style {
+             border: 1px solid var(--color-polaroid-border); 
+             box-shadow: 0 10px 20px -5px var(--color-polaroid-shadow);
+        }
+        .dark-mode .image-gallery-container:hover .gallery-image-1,
+        .dark-mode .image-gallery-container:hover .gallery-image-2 {
+             box-shadow: 0 15px 25px -5px var(--color-polaroid-shadow);
+        }
+        .dark-mode .image-gallery-item:hover {
+            box-shadow: 0 20px 30px -5px rgba(255, 255, 255, 0.15), 0 15px 15px -5px rgba(255, 255, 255, 0.1);
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+    <div id="theme-curtain"></div>
+
+    <div class="max-w-4xl mx-auto min-h-screen main-content-box">
+
+        <nav class="fixed top-0 inset-x-0 py-4 z-50">
+            <div id="nav-pill" class="max-w-fit mx-auto backdrop-blur-md rounded-full shadow-xl p-2 flex items-center space-x-4 
+                        bg-white/70 border border-gray-100 shadow-lg transition-colors duration-500
+                        dark:bg-gray-800/90 dark:border-gray-700 dark:shadow-xl">
+                
+                <div class="flex items-center space-x-4 text-base font-medium">
+                    <a href="./Home.html#hero" class="transition duration-500 px-2 py-1 rounded-full text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" data-target="home">
+                        Home
+                    </a>
+                    <a href="./Projects.html" class="transition duration-500 px-2 py-1 rounded-full text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white" data-target="projects">
+                        Projects
+                    </a>
+                    <a href="./About Me.html" class="transition duration-500 px-2 py-1 rounded-full font-bold text-gray-900 dark:text-white" data-target="about">
+                        About
+                    </a>
+                </div>
+
+                <button id="theme-toggle-nav" class="transition duration-300 p-2 rounded-full cursor-pointer
+                                                text-gray-900 hover:text-gray-700
+                                                dark:text-white dark:hover:text-gray-300">
+                    <svg id="sun-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <main class="pt-28 pb-20"> 
+            <section id="about-content" class="px-8 sm:px-12 lg:px-16">
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <div class="md:col-span-2">
+                        <h1 class="text-4xl font-extrabold text-primary mb-6">About Me</h1>
+                        
+                        <p class="text-lg text-secondary mb-6">
+                                Junior Full-Stack Engineer and Computer Science graduate with the experience of transforming complex ideas into user-friendly website and and applications. Known for 
+                                blending backend depth with frontend technologies making clean and sharp websites and applications (just like this one). Currently, I focus on performance optimization and web development, 
+                                I thrive in collaborative environments and am always eager to learn the next best tool to solve a problem efficiently.
+                        </p>
+                    </div>
+
+                    <div class="md:col-span-1 flex justify-center md:justify-end items-start">
+                        <div class="w-48 h-56 lg:w-56 lg:h-64 about-image-card">
+                            <img src="https://i.ibb.co/C53KCWj1/IMG-4983-Facetune-20-09-2025-05-54-00.jpg" 
+                                 alt="Jad Alnami Profile Picture" 
+                                 class="rounded-xl object-cover">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="max-w-3xl">
+                    <p class="text-lg text-secondary mb-10">
+                        Hi, I'm Jad Alnami, a Junior Full-Stack Engineer based between Bonn & Warstein, Germany. I design and 
+                        ship scalable systems across the stack — Vue 3, TypeScript, SQL, cPanel — and even CRM tools like Zoho.
+                        Currently i'm a fresh graduate from IU International University in Bonn and interned at Simonix Digital Labs 
+                        in Kuala Lumpur Malaysia where I grew up most of my life, build and deploy components on both the client-side and 
+                        server-side, supporting the entire development lifecycle from design to production. I actively participate in 
+                        technical discussions and maintain existing codebases under clear technical guidance from senior engineers.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-primary mb-6">My Engineering Philosophy</h2>
+                    <p class="text-lg text-secondary mb-10">
+                        I believe the best engineering combines clarity, simplicity, and foresight. My focus is on breaking down 
+                        complexity into clean, scalable solutions while ensuring the people around me have the tools and 
+                        guidance they need to succeed. Whether I'm architecting a system, building a feature, or collaborating 
+                        with another developer, my goal is always to deliver results that are impactful and sustainable.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-primary mb-6">What Drives Me</h2>
+                    <p class="text-lg text-secondary mb-10">
+                        What excites me most about this field is the mix of problem-solving and people. I love collaborating 
+                        with others to turn big ideas into practical solutions, and I find it incredibly rewarding to see teammates 
+                        grow and overcome their own limits. I also have a deep passion for learning and enjoy exploring new 
+                        technologies that keep me sharp and forward-thinking.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-primary mb-6">Beyond the Screen</h2>
+                    <p class="text-lg text-secondary mb-10">
+                       Outside of work, I enjoy golfing, travelling, and attempting (and often failing) to bake 
+                       he perfect Cinnamon Rolls. I also manage a small part of the family's real estate business, 
+                       and it has taught me a lot about balancing responsibility, relationships, and long-term investment. 
+                       I like experimenting with men's fashion and personal style, and I make time to connect with friends and 
+                       family through travel, game nights, or simply catching up.
+                    </p>
+
+                    <h2 class="text-2xl font-bold text-primary mb-6">Thanks for stopping by!</h2>
+                    <p class="text-lg text-secondary mb-10">
+                        Feel free to browse my <a href="./Projects.html" class="text-link-blue hover:text-link-blue">projects</a> or 
+                        <a href="mailto:g.alnami@yahoo.com" class="text-link-blue hover:text-link-blue">get in touch</a> if you'd like to collaborate.
+                    </p>
+                </div>
+                
+                <div class="image-gallery-container flex justify-center items-center relative">
+                    
+                    <div class="image-gallery-item gallery-image-1 absolute z-10 polaroid-style">
+                         <div class="polaroid-image-wrapper">
+                             <img src="https://i.ibb.co/F4hrfb0F/IMG-0147.webp" 
+                                 alt="Exploring South East Asia">
+                         </div>
+                         <p class="polaroid-caption">
+                             Exploring South East Asia
+                         </p>
+                    </div>
+
+                    <div class="image-gallery-item gallery-image-2 absolute z-20 polaroid-style">
+                        <div class="polaroid-image-wrapper">
+                            <img src="https://i.ibb.co/NwmQkq8/IMG-0801.webp" 
+                                 alt="Baby Goat in Portugal">
+                        </div>
+                         <p class="polaroid-caption">
+                             Baby Goat in Portugal
+                         </p>
+                    </div>
+                    <div class="w-full h-56"></div> </div>
+
+            </section>
+        </main>
+
+        <footer class="mt-12 py-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex justify-center space-x-6 mb-4">
+                     <a href="https://www.linkedin.com/in/gehad-al-nami/" target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.447 20.452h-3.554v-5.48h-0.024c-0.022-0.046-0.038-0.09-0.063-0.136c-0.245-0.452-0.669-0.925-1.442-0.925c-1.096 0-1.854 0.82-1.854 2.029v4.512h-3.552v-11.884h3.552v1.734c0.501-0.785 1.34-1.558 3.197-1.558c2.316 0 4.02 1.517 4.02 4.717v7.0h3.554l0.001 0.002zM5.132 3.65c-0.852 0-1.54 0.688-1.54 1.54c0 0.85 0.688 1.54 1.54 1.54c0.853 0 1.54-0.69 1.54-1.54c0-0.852-0.687-1.54-1.54-1.54zM3.38 20.452h3.552v-11.884h-3.552v11.884z"/>
+                            </svg>
+                        </a>
+                    <a href="https://github.com/alnamiG?tab=repositories" target="_blank"
+                        rel="noopener noreferrer"
+                         class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577 0-.285-.01-1.045-.015-2.05-3.338.725-4.04-1.608-4.04-1.608-.546-1.385-1.332-1.755-1.332-1.755-1.087-.745.082-.73.082-.73 1.205.085 1.838 1.238 1.838 1.238 1.07 1.83 2.81 1.3 3.493.995.108-.775.419-1.3.765-1.59-2.67-.3-5.46-1.335-5.46-5.94 0-1.312.47-2.385 1.235-3.22-.123-.3-.535-1.52.115-3.175 0 0 1-.32 3.3.125 1.13-.313 2.34-.47 3.55-.47.005.003.01.006.015.01 1.21.0 2.42.157 3.55.47 2.3-.445 3.3-.125 3.3-.125.65 1.655.24 2.875.115 3.175.765.835 1.235 1.907 1.235 3.22 0 4.615-2.79 5.645-5.475 5.93.43.37.81 1.095.81 2.21 0 1.595-.015 2.885-.015 3.285 0 .315.22.69.825.575C20.565 21.8 24 17.303 24 12c0-6.628-5.372-12-12-12z" clip-rule="evenodd"/>
+                        </svg>
+                        </a>
+                    <a href="mailto:g.alnami@yahoo.com"
+                            rel="noopener noreferrer"
+                                class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full">
+                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+                        </svg>
+                        </a>
+                </div>
+                <p class="text-sm text-secondary">
+                    Copyright &copy; 2025 
+                </p>
+            </div>
+        </footer>
+
+    </div> 
+    
+    <script>
+        // --- Theme Toggle Logic (Copied from Home.html) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const curtain = document.getElementById('theme-curtain');
+            const toggleButton = document.getElementById('theme-toggle-nav');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            
+            // Function to update icon visibility
+            function updateIcons(isDark) {
+                if (isDark) {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+            }
+
+            // Function to set theme classes and update icons (instantaneous switch)
+            function setTheme(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+                updateIcons(isDark);
+            }
+
+            // Function to initialize and set theme
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                let initialDark = false;
+                if (savedTheme === 'dark') {
+                    initialDark = true;
+                } else if (savedTheme === 'light') {
+                    initialDark = false;
+                } else if (prefersDark) {
+                    initialDark = true;
+                }
+                
+                // Set initial theme instantly
+                setTheme(initialDark);
+                // Ensure the curtain is reset/out on load
+                curtain.classList.remove('curtain-in');
+                curtain.classList.add('curtain-out'); 
+            }
+
+            // Function to perform the circular wipe transition
+            function toggleThemeWithTransition() {
+                // Get the position of the toggle button relative to the viewport
+                const rect = toggleButton.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                // Set curtain start point using CSS variables
+                document.documentElement.style.setProperty('--curtain-start-x', `${centerX}px`);
+                document.documentElement.style.setProperty('--curtain-start-y', `${centerY}px`);
+
+                const isCurrentlyDark = body.classList.contains('dark-mode');
+                const targetIsDark = !isCurrentlyDark;
+                
+                // 1. Prepare and show curtain (Color is based on the theme we are LEAVING)
+                curtain.classList.remove('curtain-out');
+                curtain.classList.add('curtain-in');
+
+                if (isCurrentlyDark) {
+                    // Leaving Dark -> Curtain starts Dark
+                    curtain.classList.add('theme-curtain-dark');
+                    curtain.classList.remove('theme-curtain-light');
+                } else {
+                    // Leaving Light -> Curtain starts Light
+                    curtain.classList.add('theme-curtain-light');
+                    curtain.classList.remove('theme-curtain-dark');
+                }
+                
+                // 2. Wait for the curtain to cover the screen (CSS transition is 0.5s)
+                setTimeout(() => {
+                    // 3. Immediately switch theme behind the curtain
+                    setTheme(targetIsDark); 
+
+                    // 4. Change curtain color to the NEW theme before it exits
+                    if (targetIsDark) {
+                        curtain.classList.add('theme-curtain-dark');
+                        curtain.classList.remove('theme-curtain-light');
+                    } else {
+                        curtain.classList.add('theme-curtain-light');
+                        curtain.classList.remove('theme-curtain-dark');
+                    }
+
+                    // 5. Hide curtain (scale out)
+                    curtain.classList.remove('curtain-in');
+                    curtain.classList.add('curtain-out');
+                    
+                }, 500); // SYNCHRONIZED
+            }
+
+
+            // Event Listener 
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleThemeWithTransition);
+            }
+            
+            // Initialize on load
+            initializeTheme();
+        });
+    </script>
+</body>
+</html>

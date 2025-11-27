@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Portfolio - Projects</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        /* === COLOR VARIABLE DEFINITIONS (MONOCHROMATIC) === */
+        :root {
+            /* Light Mode Defaults (Black Accent) */
+            --color-bg-primary: #f7f7f7;
+            --color-bg-secondary: #ffffff;
+            --color-text-primary: #333333;
+            --color-text-secondary: #6b7280; /* Gray 500/600 */
+            --color-accent: #000000; /* BLACK */
+            --color-accent-hover: #1f2937; /* Dark Gray for hover */
+            --color-border: #e5e7eb; /* Gray 200 */
+            --color-card-bg: #f9fafb; /* Very Light Gray for Testimonial/Card */
+            --color-status-light: #000000; /* Black for light mode status text/dot */
+            
+            /* The black button is now the accent button */
+            --color-black-btn-bg: #000000;
+            --color-black-btn-text: #ffffff;
+
+            /* Project Specific Light Mode Colors */
+            --color-project-link-hover: #1f2937; /* Dark Gray for hover */
+            --color-project-graphic-bg: #f3f4f6; /* Light gray box background */
+        
+            /* Testimonial specific colors (LIGHT MODE - requested light grey) */
+            --color-testimonial-bg: #e5e7eb; /* Light Gray (Tailwind gray-200) */
+            --color-quote-text: #1f2937; /* Dark text for contrast */
+            --color-quote-mark: #6b7280; /* Gray 500 for quote marks */
+            --color-attribution-text: #111827; /* Very dark text for name */
+            --color-attribution-info: #4b5563; /* Gray 600 for CEO/Title */
+            --color-separator-line: #d1d5db; /* Gray 300 for line */
+            
+            /* FAQ Specific LIGHT MODE colors */
+            --color-faq-tab-bg: #e5e7eb; 
+            --color-faq-tab-text-inactive: #6b7280;
+            --color-faq-tab-active-bg: #ffffff;
+            --color-faq-tab-active-text: #333333;
+
+            /* --- UPDATED FOR LIGHT GRAY BACKGROUND --- */
+            --color-faq-item-closed-bg: #f3f4f6; /* Light Gray for contrast (Tailwind gray-100) */
+            --color-faq-item-open-bg: #ffffff; /* White background for open content */
+            --color-faq-item-border: #e5e7eb; 
+            --color-faq-item-header-bg: #f3f4f6; /* Header uses the new light gray */
+
+            /* Theme Curtain Colors */
+            --color-curtain-light: #f7f7f7; 
+            --color-curtain-dark: #000000; 
+
+            /* CSS variables to hold calculated position of the theme toggle button */
+            --curtain-start-x: 50%;
+            --curtain-start-y: 0;
+        }
+
+        .dark-mode {
+            /* Dark Mode Overrides (White Accent) */
+            --color-bg-primary: #121111; /* Primary background color (main body) */
+            --color-bg-secondary: #171616; /* Secondary background color (content box) */
+            --color-text-primary: #ffffff;
+            --color-text-secondary: #cccccc; 
+            --color-accent: #ffffff; /* Main accent color (titles, buttons, links) */
+            --color-accent-hover: #d1d5db; 
+            --color-border: #171616; 
+            --color-card-bg: #111827; 
+            --color-status-light: #ffffff; 
+
+            /* The black button (Contact Me) is now the white accent button */
+            --color-black-btn-bg: #ffffff;
+            --color-black-btn-text: #171616;
+
+            /* Project Specific Dark Mode Colors (Matching Screenshot's background) */
+            --color-project-link-hover: #cccccc; 
+            --color-project-graphic-bg: #1c1b1b; /* Dark gray box background for graphics */
+            
+            /* Testimonial specific colors (DARK MODE - requested dark carbon/black) */
+            --color-testimonial-bg: #1c1b1b; 
+            --color-quote-text: #ffffff;
+            --color-quote-mark: #6b7280; 
+            --color-attribution-text: #ffffff;
+            --color-attribution-info: #9ca3af; 
+            --color-separator-line: #374151; 
+
+            /* --- FAQ Specific DARK MODE colors (MATCHING SCREENSHOT) --- */
+            --color-faq-tab-bg: transparent; 
+            --color-faq-tab-text-inactive: #9ca3af; 
+            --color-faq-tab-active-bg: #2b2e35; 
+            --color-faq-tab-active-text: #ffffff; 
+
+            --color-faq-item-closed-bg: #1c1b1b; 
+            --color-faq-item-header-bg: #1c1b1b; 
+            --color-faq-item-open-bg: #1c1b1b; 
+            --color-faq-item-border: #1c1b1b; 
+        }
+        
+        /* === GLOBAL STYLES & TRANSITIONS === */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg-primary);
+            color: var(--color-text-primary);
+            transition: none; 
+        }
+        
+        .main-content-box {
+            background-color: var(--color-bg-secondary);
+            transition: box-shadow 0.5s ease; 
+        }
+
+        /* Set specific transitions for elements that need it */
+        a, button, div, input, textarea {
+            transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+        }
+
+        #nav-pill a {
+            transition: color 0.5s ease, background-color 0.5s ease; 
+        }
+
+        #nav-pill {
+            transition: background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .btn-black { 
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        
+        /* === THEME CURTAIN STYLES === */
+        #theme-curtain {
+            position: fixed;
+            top: var(--curtain-start-y);
+            left: var(--curtain-start-x);
+            
+            width: 100vh;
+            height: 100vh;
+            border-radius: 50%;
+            z-index: 100; 
+            transform: translate(-50%, -50%) scale(0); 
+            
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            pointer-events: none; 
+            will-change: transform, background-color;
+        }
+
+        .theme-curtain-light { background-color: var(--color-curtain-light); }
+        .theme-curtain-dark { background-color: var(--color-curtain-dark); }
+        
+        .curtain-in {
+            transform: translate(-50%, -50%) scale(50); 
+            pointer-events: auto; 
+        }
+
+        .curtain-out {
+            transform: translate(-50%, -50%) scale(0); 
+            pointer-events: none;
+        }
+
+        /* === ELEMENT STYLES USING CSS VARIABLES === */
+        
+        /* Text */
+        .text-primary { color: var(--color-text-primary); }
+        .text-secondary { color: var(--color-text-secondary); }
+        .text-accent { color: var(--color-accent); }
+        .border-accent { border-color: var(--color-accent); }
+
+        /* Backgrounds */
+        .bg-secondary { background-color: var(--color-bg-secondary); }
+        .bg-card { background-color: var(--color-card-bg); }
+        
+        /* Accent elements (Buttons, Highlights) */
+        .bg-accent { background-color: var(--color-accent); }
+        .hover\:bg-accent-hover:hover { background-color: var(--color-accent-hover); }
+
+        /* Black Button Style (Contact Me) */
+        .btn-black { 
+            background-color: var(--color-black-btn-bg); 
+            color: var(--color-black-btn-text);
+            border-color: var(--color-black-btn-bg);
+        }
+        
+        /* --- PROJECT SECTION STYLES --- */
+        
+        /* Project Graphic Container Styles */
+        .project-graphic-container {
+            background-color: var(--color-project-graphic-bg);
+            /* Ensure the shadow doesn't interfere with the transition */
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+            will-change: transform;
+        }
+        
+        /* Project Image/Graphic Hover Effect */
+        .project-item:hover .project-graphic-container {
+            /* Subtle upward lift and slight scaling */
+            transform: translateY(-4px) scale(1.01);
+        }
+
+        /* Project Link Hover Effect */
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            /* Transition for text color */
+            transition: color 0.3s ease; 
+            color: #007AFF;
+        }
+
+        .project-link:hover {
+            color: var(--color-project-link-hover);
+            color: #007AFF;
+        }
+        
+        .project-link-arrow {
+            /* Start hidden to the left (negative X) */
+            transform: translateX(-8px);
+            opacity: 0;
+            margin-left: 4px; /* Space between text and arrow */
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease;
+            will-change: transform, opacity;
+            color: #007AFF;
+        }
+
+        .project-link:hover .project-link-arrow {
+            /* Slide in to its final position (0) and become visible */
+            transform: translateX(0);
+            opacity: 1;
+            color: #007AFF;
+        }
+
+        /* Utility for centering content inside the graphic box */
+        .graphic-content-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* --- Other existing styles retained for theme compatibility --- */
+        .status-light-text { color: var(--color-status-light); }
+        .blinking-dot { background-color: #22c55e; animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse-green { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    </style>
+</head>
+<body class="antialiased">
+    <div id="theme-curtain"></div>
+
+    <div class="max-w-4xl mx-auto min-h-screen main-content-box">
+
+        <nav class="fixed top-0 inset-x-0 py-4 z-50">
+            <div id="nav-pill" class="max-w-fit mx-auto backdrop-blur-md rounded-full shadow-xl p-2 flex items-center space-x-4 
+                        bg-white/70 border border-gray-100 shadow-lg transition-colors duration-500
+                        dark:bg-gray-800/90 dark:border-gray-700 dark:shadow-xl">
+                
+                <div class="flex items-center space-x-4 text-base font-medium">
+                    <a href="./Home.html" class="transition duration-500 px-2 py-1 rounded-full">
+                        Home
+                    </a>
+                    <a href="./Projects.html" class="transition duration-500 px-2 py-1 rounded-full active-link">
+                        Projects
+                    </a>
+                    <a href="./About Me.html" class="transition duration-500 px-2 py-1 rounded-full">
+                        About
+                    </a>
+                </div>
+
+                <button id="theme-toggle-nav" class="transition duration-300 p-2 rounded-full cursor-pointer
+                                                text-gray-900 hover:text-gray-700
+                                                dark:text-white dark:hover:text-gray-300">
+                    <svg id="sun-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                    <svg id="moon-icon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <main class="pt-28"> 
+            
+            <section id="projects" class="pt-10 pb-20 px-8 sm:px-12 lg:px-16">
+                
+                <h1 class="text-5xl md:text-6xl font-extrabold text-primary mb-6 md:mb-8">
+                    Building Scalable Systems.
+                </h1>
+
+                <p class="text-lg text-secondary mb-10 max-w-3xl">
+                    Projects demonstrating my ability to build integrated logistics systems, design normalized SQL databases, and deploy maintainable fullstack applications.
+                </p>
+
+                <div class="flex items-center space-x-4 mb-20">
+                    <a href="https://teams.live.com/l/community/FEACbDPvzQT7MwjTwI"
+                       class="inline-flex items-center justify-center px-6 py-3 border border-black text-base font-medium rounded-lg shadow-sm btn-black transition duration-100">
+                        Let's talk
+                    </a>
+
+                    <a href="mailto:g.alnami@yahoo.com" 
+                       class="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg text-white bg-blue-500 hover:bg-blue-600 transition duration-100">
+                        Email me
+                    </a>
+                </div>
+
+                <div class="space-y-16">
+                    
+                    <div class="project-item grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        <div>
+                            <p class="text-sm font-medium text-secondary mb-1">2025</p>
+                            <h3 class="text-2xl font-bold text-accent mb-4">Lalamove REST API Integration for Delivery Automation</h3>
+                            <p class="text-base text-secondary mb-6">
+                                Integrated the Lalamove REST API to automate delivery logistics for a restaurant. This involved handling order placement, real-time tracking, and dynamic cost calculation to streamline the dispatch process and improve customer service speed.
+                            </p>
+                            <a href="https://developers.lalamove.com/#introduction" target="_blank" class="project-link text-primary hover:text-accent-hover font-medium">
+                                View Documentation 
+                                <span class="project-link-arrow text-2xl ml-1 leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                        <div>
+                            <div class="project-graphic-container rounded-xl aspect-square border border-gray-700/50 overflow-hidden">
+                                <a href="https://developers.lalamove.com/#introduction" target="_blank">
+                                    <img src="https://i.ibb.co/hJZkdwHy/xj-IM3a-Shk3-TH.jpg" alt="Lalamove API Integration Preview" class="w-full h-full object-cover transition-transform duration-300"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        <div class="md:order-2">
+                            <p class="text-sm font-medium text-secondary mb-1">2025</p>
+                            <h3 class="text-2xl font-bold text-accent mb-4">Simonix Digital Labs (Fullstack Development)</h3>
+                            <p class="text-base text-secondary mb-6">
+                                As a Fullstack Engineer Intern, I implemented and maintained core features for the platform. My work focused on creating new frontend components using PHP and Wordpress, building user dashboard for their Smart-Home application, and assisting with backend logic and IT support for scalable digital solutions in cPanel Hosting Servers.
+                            </p>
+                            <a href="https://simonix.my" target="_blank" class="project-link text-primary hover:text-accent-hover font-medium">
+                                Visit Site 
+                                <span class="project-link-arrow text-2xl ml-1 leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                        <div class="md:order-1">
+                            <div class="project-graphic-container rounded-xl aspect-square border border-gray-700/50 overflow-hidden">
+                                <a href="https://simonix.my" target="_blank">
+                                    <img src="https://i.ibb.co/99LTVqCT/Screenshot-2025-11-24-010839.png" alt="Simonix Digital Labs Platform Preview" class="w-full h-full object-cover transition-transform duration-300"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        <div>
+                            <p class="text-sm font-medium text-secondary mb-1">2024</p>
+                            <h3 class="text-2xl font-bold text-accent mb-4">AirBnB SQL Data Schema</h3>
+                            <p class="text-base text-secondary mb-6">
+                                Designed a fully normalized SQL schema for a simulated (AirBNB-like) booking data mart. This involved creating 21 core entities and defining complex M:N relationships using junction tables with MySQL v8, guaranteeing data integrity and optimized querying.
+                            </p>
+                            <a href="https://drive.google.com/file/d/1oVxnC_CuZP3aIs4-bZSgrH8C5ye7928t/view?usp=drive_link" target="_blank" class="project-link text-primary hover:text-accent-hover font-medium">
+                                View Document 
+                                <span class="project-link-arrow text-2xl ml-1 leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                        <div>
+                            <div class="project-graphic-container rounded-xl aspect-square border border-gray-700/50 overflow-hidden">
+                                <a href="https://drive.google.com/file/d/1oVxnC_CuZP3aIs4-bZSgrH8C5ye7928t/view?usp=drive_link" target="_blank">
+                                    <img src="https://i.ibb.co/N23WzfTG/Screenshot-2025-11-24-011035.png" alt="Airbnb Data Mart ER Diagram Preview" class="w-full h-full object-cover transition-transform duration-300"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-item grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        <div class="md:order-2">
+                            <p class="text-sm font-medium text-secondary mb-1">2025</p>
+                            <h3 class="text-2xl font-bold text-accent mb-4">Gym Workout Tracker (Web App)</h3>
+                            <p class="text-base text-secondary mb-6">
+                                Developed a multi-page web application for consistent fitness progress tracking. The app utilizes a scalable architecture and uses Firestore for persistent data, offering users an intuitive record system and dynamic logging features.
+                            </p>
+                            <a href="https://drive.google.com/file/d/1ZiCQ3jffS6NCCImqpSr2uSIaU8kjy7qg/view?usp=drive_link" target="_blank" class="project-link text-primary hover:text-accent-hover font-medium">
+                                View Document 
+                                <span class="project-link-arrow text-2xl ml-1 leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                        <div class="md:order-1">
+                            <div class="project-graphic-container rounded-xl aspect-square border border-gray-700/50 overflow-hidden">
+                                <a href="https://drive.google.com/file/d/1ZiCQ3jffS6NCCImqpSr2uSIaU8kjy7qg/view?usp=drive_link" target="_blank">
+                                    <img src="https://i.ibb.co/LX9BQvzs/Screenshot-2025-11-24-011111.png" alt="Gym Workout Tracker UI Preview" class="w-full h-full object-cover transition-transform duration-300"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="project-item grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-20 items-start">
+                        <div>
+                            <p class="text-sm font-medium text-secondary mb-1">2024</p>
+                            <h3 class="text-2xl font-bold text-accent mb-4">Sadeef Consulting (Web Development & Support)</h3>
+                            <p class="text-base text-secondary mb-6">
+                                Contributed to enhancing the corporate website. My responsibilities included optimising using ITIL methods and refining the user interface, improving site performance, and delivering 2nd Level IT Support to ensure the digital presence maintained high stability and professional standards.
+                            </p>
+                            <a href="https://sadeefconsulting.com" target="_blank" class="project-link text-primary hover:text-accent-hover font-medium">
+                                Visit Site 
+                                <span class="project-link-arrow text-2xl ml-1 leading-none">&rarr;</span>
+                            </a>
+                        </div>
+                        <div>
+                            <div class="project-graphic-container rounded-xl aspect-square border border-gray-700/50 overflow-hidden">
+                                <a href="https://sadeefconsulting.com" target="_blank">
+                                    <img src="https://i.ibb.co/8Dx7gK3X/meetings-4-20.webp" alt="Sadeef Consulting Corporate Site Preview" class="w-full h-full object-cover transition-transform duration-300"/>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                </section>
+
+        </main>
+
+        <footer class="mt-12 py-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <div class="flex justify-center space-x-6 mb-4">
+                     <a href="https://www.linkedin.com/in/gehad-al-nami/" target="_blank" 
+                           rel="noopener noreferrer" 
+                           class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20.447 20.452h-3.554v-5.48h-0.024c-0.022-0.046-0.038-0.09-0.063-0.136c-0.245-0.452-0.669-0.925-1.442-0.925c-1.096 0-1.854 0.82-1.854 2.029v4.512h-3.552v-11.884h3.552v1.734c0.501-0.785 1.34-1.558 3.197-1.558c2.316 0 4.02 1.517 4.02 4.717v7.0h3.554l0.001 0.002zM5.132 3.65c-0.852 0-1.54 0.688-1.54 1.54c0 0.85 0.688 1.54 1.54 1.54c0.853 0 1.54-0.69 1.54-1.54c0-0.852-0.687-1.54-1.54-1.54zM3.38 20.452h3.552v-11.884h-3.552v11.884z"/>
+                            </svg>
+                        </a>
+                    <a href="https://github.com/alnamiG?tab=repositories" target="_blank"
+                        rel="noopener noreferrer"
+                         class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M12 0C5.372 0 0 5.372 0 12c0 5.303 3.438 9.8 8.207 11.387.6.11.82-.26.82-.577 0-.285-.01-1.045-.015-2.05-3.338.725-4.04-1.608-4.04-1.608-.546-1.385-1.332-1.755-1.332-1.755-1.087-.745.082-.73.082-.73 1.205.085 1.838 1.238 1.838 1.238 1.07 1.83 2.81 1.3 3.493.995.108-.775.419-1.3.765-1.59-2.67-.3-5.46-1.335-5.46-5.94 0-1.312.47-2.385 1.235-3.22-.123-.3-.535-1.52.115-3.175 0 0 1-.32 3.3.125 1.13-.313 2.34-.47 3.55-.47.005.003.01.006.015.01 1.21.0 2.42.157 3.55.47 2.3-.445 3.3-.125 3.3-.125.65 1.655.24 2.875.115 3.175.765.835 1.235 1.907 1.235 3.22 0 4.615-2.79 5.645-5.475 5.93.43.37.81 1.095.81 2.21 0 1.595-.015 2.885-.015 3.285 0 .315.22.69.825.575C20.565 21.8 24 17.303 24 12c0-6.628-5.372-12-12-12z" clip-rule="evenodd"/>
+                        </svg>
+                        </a>
+                    <a href="mailto:g.alnami@yahoo.com"
+                            rel="noopener noreferrer"
+                                class="text-accent hover:text-accent-hover transition duration-100 p-2 rounded-full hover:bg-border">
+                                 <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5-8-5h16zm0 12H4V8l8 5 8-5v10z"/>
+                        </svg>
+                        </a>
+                </div>
+                <p class="text-sm text-secondary">
+                    Copyright &copy; 2025 
+                </p>
+            </div>
+        </footer>
+
+    </div> 
+    
+    <script>
+        // --- THEME LOGIC (Copied exactly from Home.html) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const body = document.body;
+            const curtain = document.getElementById('theme-curtain');
+            const toggleButton = document.getElementById('theme-toggle-nav');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            
+            // Function to update icon visibility
+            function updateIcons(isDark) {
+                if (isDark) {
+                    sunIcon.classList.add('hidden');
+                    moonIcon.classList.remove('hidden');
+                } else {
+                    sunIcon.classList.remove('hidden');
+                    moonIcon.classList.add('hidden');
+                }
+            }
+
+            // Function to set theme classes and update icons (instantaneous switch)
+            function setTheme(isDark) {
+                if (isDark) {
+                    body.classList.add('dark-mode');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.classList.remove('dark-mode');
+                    localStorage.setItem('theme', 'light');
+                }
+                updateIcons(isDark);
+            }
+
+            // Function to initialize and set theme
+            function initializeTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                
+                let initialDark = false;
+                if (savedTheme === 'dark') {
+                    initialDark = true;
+                } else if (savedTheme === 'light') {
+                    initialDark = false;
+                } else if (prefersDark) {
+                    initialDark = true;
+                }
+                
+                setTheme(initialDark);
+                curtain.classList.remove('curtain-in');
+                curtain.classList.add('curtain-out'); 
+            }
+
+            // Function to perform the circular wipe transition
+            function toggleThemeWithTransition() {
+                const rect = toggleButton.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                document.documentElement.style.setProperty('--curtain-start-x', `${centerX}px`);
+                document.documentElement.style.setProperty('--curtain-start-y', `${centerY}px`);
+
+                const isCurrentlyDark = body.classList.contains('dark-mode');
+                const targetIsDark = !isCurrentlyDark;
+                
+                // 1. Prepare and show curtain (Color is based on the theme we are LEAVING)
+                curtain.classList.remove('curtain-out');
+                curtain.classList.add('curtain-in');
+
+                if (isCurrentlyDark) {
+                    curtain.classList.add('theme-curtain-dark');
+                    curtain.classList.remove('theme-curtain-light');
+                } else {
+                    curtain.classList.add('theme-curtain-light');
+                    curtain.classList.remove('theme-curtain-dark');
+                }
+                
+                // 2. Wait for the curtain to cover the screen (CSS transition is 0.5s)
+                setTimeout(() => {
+                    // 3. Immediately switch theme behind the curtain
+                    setTheme(targetIsDark); 
+                    
+                    // 4. Change curtain color to the NEW theme before it exits
+                    if (targetIsDark) {
+                        curtain.classList.add('theme-curtain-dark');
+                        curtain.classList.remove('theme-curtain-light');
+                    } else {
+                        curtain.classList.add('theme-curtain-light');
+                        curtain.classList.remove('theme-curtain-dark');
+                    }
+
+                    // 5. Hide curtain (scale out)
+                    curtain.classList.remove('curtain-in');
+                    curtain.classList.add('curtain-out');
+                    
+                }, 500); // SYNCHRONIZED
+            }
+
+            if (toggleButton) {
+                toggleButton.addEventListener('click', toggleThemeWithTransition);
+            }
+            
+            // Initialize on load
+            initializeTheme();
+
+            // --- NAVIGATION HIGHLIGHT LOGIC ---
+            // The logic from Home.html is adapted here.
+            // Since this is the Projects page, we only need to set the initial active state,
+            // as there's only one main section here.
+
+            const navLinks = document.querySelectorAll('nav a');
+            
+            const activeClasses = ['font-bold', 'text-gray-900', 'dark:text-white'];
+            const inactiveClasses = ['text-gray-600', 'hover:text-gray-900', 'dark:text-gray-400', 'dark:hover:text-white'];
+
+            // Function to set the Projects link as active on load
+            function updateActiveNavOnLoad() {
+                navLinks.forEach(a => {
+                    if (a.textContent.trim() === 'Projects') {
+                        a.classList.add(...activeClasses);
+                        a.classList.remove(...inactiveClasses);
+                    } else {
+                        a.classList.add(...inactiveClasses);
+                        a.classList.remove(...activeClasses);
+                    }
+                });
+            }
+            
+            // Call initially to set active link on load
+            updateActiveNavOnLoad(); 
+        });
+    </script>
+</body>
+</html>
