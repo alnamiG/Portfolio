@@ -1,53 +1,71 @@
-Jad Alnami | Full-stack Engineer Portfolio
-🌐 Live Demo
-View the deployed portfolio here: https://jadalnami.netlify.app
-💻 Project Overview
-This repository contains the source code for my personal portfolio, designed and built to showcase my core competencies in modern web development, data architecture, and full-stack problem-solving.
-Architecture & Code Structure
-The entire portfolio is a multi-page static website consisting of three core files: Home.html, Projects.html, and About Me.html.
-Deployment: The pages are designed to be served from a single folder and were deployed using Netlify, utilizing relative paths (./Projects.html) to maintain connectivity between the pages.
-Technology Stack: The project is built using only HTML5, Tailwind CSS, and vanilla JavaScript. This approach demonstrates a strong foundation in core web technologies without reliance on external frameworks for structure.
-Key Technical Implementations
+# Jad Alnami | Junior Full-Stack Engineer Portfolio
+
+## 🌐 Overview  
+This repository contains the source code for my professional developer portfolio website. It is a static, multi-page site designed to highlight my skills in full-stack development, system integration, database design, and technical support.  
+
+The portfolio includes **Home**, **Projects**, and **About Me** sections, featuring a modern responsive layout with full **dark mode** support and smooth UI transitions.
+
+---
+
+## 🚀 Live Site  
+View the deployed portfolio here:  
+👉 **[Live Portfolio Link](#)**  
+*(Replace with your actual deployment URL)*
+
+---
+
+## 💻 Tech Stack  
+
+| Category   | Technology       | Purpose |
+|------------|------------------|---------|
+| **Styling** | Tailwind CSS | Utility-first framework for rapid, responsive UI development. |
+| **Markup** | HTML5 | Core page structure and content. |
+| **Logic** | Vanilla JavaScript | Handles theme switching, navigation effects, and all client-side interactivity. |
+| **Design** | CSS Variables | Powering the light/dark mode system with centralized color control. |
+
+---
+
+## ✨ Key Features & Highlights  
+
+### **1. Unified Monochromatic Design & Theme Switching**
+- **Dual Theme Support** (light/dark mode) with CSS variables  
+- **Local storage persistence** for remembering user preference  
+- **Circular wipe transition** animation for theme switching and page navigation  
+- **Fully responsive design** across mobile, tablet, and desktop  
+
+---
+
+### **2. Project Showcase — _Projects.html_**
+Highlights include:
+- **Lalamove REST API Integration** for automated delivery workflows  
+- **SQL Data Schema Design** (full AirBnB-style 21-entity data mart)  
+- **Fullstack Development** experience using PHP, WordPress, and REST APIs  
+
+---
+
+### **3. Informational Pages — _Home.html & About Me.html_**
+- **Accordion FAQ** powered by JavaScript  
+- **Polaroid-style Image Gallery** with dynamic layout + hover effects  
+- **Fading Marquee Scroll** section for animated UI engagement  
+
+---
+
+## 📁 Project Structure  
+
+.
+├── Home.html # Landing page (hero, testimonials, FAQ)
+├── Projects.html # Dedicated technical project listings
+├── About Me.html # Personal background & philosophy
+├── README.md # Documentation (this file)
+└── assets/ # (Optional) Images, fonts, icons
 
 
-Implementation Detail
-Description
-Responsive Theming
-Core Code: JavaScript logic manages localStorage and toggles a dark-mode CSS class on the <body>. Custom CSS variables (--color-bg-primary, --color-accent) ensure a consistent, theme-aware palette across all elements.
-Circular Wipe Transition
-A custom JavaScript/CSS animation is used for the Dark/Light theme switch and page navigation, providing a highly polished, single-page-application feel to the multi-page structure.
-Data Modeling
-The repository includes documentation (referenced on the Projects page) demonstrating strong foundational knowledge in relational database design, specifically a fully normalized SQL schema.
-API Integration Experience
-The Projects page highlights experience with integrating external REST APIs (e.g., Lalamove), detailing the process of handling logistics automation and dynamic cost calculation.
+#📞 Contact & Socials
 
-📂 Featured Projects
-The projects highlighted on the live site demonstrate my ability to move from abstract problem-solving to deployed solutions.
-Project Title
-Core Focus
-Technologies & Skills
-Lalamove REST API Integration
-Delivery Automation
-REST API, Logistics Integration, Real-time Calculation, PHP/Backend Logic
-Simonix Digital Labs
-Fullstack Development Internship
-PHP, WordPress, cPanel Hosting, Frontend Component Building, IT Support
-AirBnB SQL Data Schema
-Database Architecture
-MySQL v8, Data Modeling, Normalization (3NF), ERD Design
-Gym Workout Tracker
-Data Persistence & Web App Dev
-JavaScript, HTML/CSS, Firestore (NoSQL), Front-end State Management
-
-🏃 Getting Started (Local Setup)
-Clone the repository:
-git clone [https://github.com/alnamiG/your-repo-name.git](https://github.com/alnamiG/your-repo-name.git)
-cd your-repo-name
+| Platform     | Link                                                                             |
+| ------------ | -------------------------------------------------------------------------------- |
+| **LinkedIn** | [https://linkedin.com/in/gehad-al-nami/](https://linkedin.com/in/gehad-al-nami/) |
+| **GitHub**   | [https://github.com/alnamiG](https://github.com/alnamiG)                         |
+| **Email**    | [g.alnami@yahoo.com](mailto:g.alnami@yahoo.com)                                  |
 
 
-Run Locally:
-Simply open the Home.html file in your preferred web browser. No compilation or server is required.
-🔗 Connect with Me
-LinkedIn: Gehad Al-Nami
-GitHub: alnamiG
-Email: g.alnami@yahoo.com
